@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<!-- Placeholder image 800x800 - replace with your own product photo of the same size -->
+<defs>
+  <radialGradient id="spot" cx="50%" cy="40%" r="62%">
+    <stop offset="0" stop-color="#2A2A2A"/>
+    <stop offset="1" stop-color="#0A0A0A"/>
+  </radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#FFC400" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#FFC400" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#000000" stop-opacity="0.6"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#spot)"/>
+<ellipse cx="400.0" cy="450" rx="336" ry="336" fill="url(#glow)"/>
+<ellipse cx="400.0" cy="650" rx="280" ry="36" fill="url(#floor)"/>
+<g transform="translate(400.0 650) scale(1.0) translate(-400.0 -640)" fill="none" stroke="#FFC400" stroke-width="2.40" stroke-linecap="round" stroke-linejoin="round">
+<path d="M160 420A240 240 0 0 0 640 420Z" fill="#171717"/>
+<path d="M190 420A210 210 0 0 0 610 420" opacity=".55"/>
+<path d="M160 420H640"/>
+<path transform="translate(250 470) rotate(-20) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(300 520) rotate(-10) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(360 545) rotate(0) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(420 545) rotate(5) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(480 520) rotate(12) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(530 470) rotate(22) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(330 480) rotate(-6) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/><path transform="translate(450 482) rotate(8) scale(.9)" d="M0-9C4-9 6-3 5 2 4 6-4 6-5 2-6-3-4-9 0-9Z" fill="#FFC400" fill-opacity=".55" stroke="none"/>
+<g transform="translate(560 560) scale(1.0)">
+<circle r="80" fill="#171717"/>
+<circle r="64" opacity=".5"/>
+<path d="M0-64V64M-55-32 55 32M55-32-55 32" opacity=".22"/>
+<circle cx="-30" cy="-20" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="-8" cy="-30" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="16" cy="-22" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="34" cy="-2" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="-36" cy="6" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="-14" cy="2" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="10" cy="0" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="26" cy="22" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="-24" cy="30" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/><circle cx="0" cy="28" r="9" fill="#E85A0C" fill-opacity=".85" stroke="none"/>
+<path d="M-60-30a70 70 0 0 1 40-42" stroke="#FFE066"/>
+</g>
+<g transform="translate(250 560) scale(0.6) translate(-100 -140)" stroke="#FFC400" stroke-width="4.00">
+  <path d="M84 60c-1-12-5-22-12-30 10 2 16 7 19 13 2-9 5-16 9-22 4 6 7 13 9 22 3-6 9-11 19-13-7 8-11 18-12 30Z" fill="#171717"/>
+  <path d="M100 50c52 0 86 42 86 90 0 46-38 74-86 74S14 186 14 140c0-48 34-90 86-90Z" fill="#171717"/>
+  <path d="M74 58c-28 34-30 112 2 150M126 58c28 34 30 112-2 150" opacity=".45" fill="none"/>
+  <path d="M38 122c6-28 24-48 48-56" stroke="#FFE066" fill="none"/>
+</g>
+</g>
+</svg>

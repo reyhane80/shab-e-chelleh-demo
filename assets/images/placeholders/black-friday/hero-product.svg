@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<!-- Placeholder image 800x800 with transparent background - replace with your own transparent PNG product photo -->
+<g transform="translate(400 700) scale(1.25) translate(-400 -640)" fill="none" stroke="#FFC400" stroke-width="1.92" stroke-linecap="round" stroke-linejoin="round">
+<rect x="244" y="404" width="312" height="236" rx="6" fill="#171717"/>
+<rect x="222" y="340" width="356" height="70" rx="8" fill="#171717"/>
+<path d="M400 340V640"/>
+<g transform="translate(480 528) scale(0.32) translate(-100 -140)" stroke="#FFC400" stroke-width="7.50">
+  <path d="M84 60c-1-12-5-22-12-30 10 2 16 7 19 13 2-9 5-16 9-22 4 6 7 13 9 22 3-6 9-11 19-13-7 8-11 18-12 30Z" fill="#171717"/>
+  <path d="M100 50c52 0 86 42 86 90 0 46-38 74-86 74S14 186 14 140c0-48 34-90 86-90Z" fill="#171717"/>
+  <path d="M74 58c-28 34-30 112 2 150M126 58c28 34 30 112-2 150" opacity=".45" fill="none"/>
+  <path d="M38 122c6-28 24-48 48-56" stroke="#FFE066" fill="none"/>
+</g>
+<path d="M400 340C356 262 288 280 326 324 344 342 378 344 400 340Z" fill="#171717"/>
+<path d="M400 340C444 262 512 280 474 324 456 342 422 344 400 340Z" fill="#171717"/>
+<circle cx="400" cy="338" r="9" fill="#171717"/>
+</g>
+</svg>

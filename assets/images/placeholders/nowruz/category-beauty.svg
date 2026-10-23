@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<!-- Placeholder image 800x800 - replace with your own product photo of the same size -->
+<defs>
+  <radialGradient id="spot" cx="50%" cy="40%" r="62%">
+    <stop offset="0" stop-color="#FBFDF9"/>
+    <stop offset="1" stop-color="#E1EBDD"/>
+  </radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#1F4A35" stop-opacity="0.16"/>
+    <stop offset="1" stop-color="#1F4A35" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#spot)"/>
+<ellipse cx="400.0" cy="368" rx="255" ry="255" fill="url(#glow)"/>
+<ellipse cx="400.0" cy="520" rx="175" ry="23" fill="url(#floor)"/>
+<g transform="translate(400.0 520) scale(0.76) translate(-400.0 -640)" fill="none" stroke="#B14E7A" stroke-width="3.16" stroke-linecap="round" stroke-linejoin="round">
+<g transform="translate(400 640) scale(1.0) translate(-400 -640)">
+<rect x="366" y="300" width="68" height="48" rx="4" fill="#F5F9F2"/>
+<rect x="340" y="214" width="120" height="90" rx="12" fill="#F5F9F2"/>
+<rect x="296" y="340" width="208" height="300" rx="30" fill="#F5F9F2"/>
+<path d="M316 440H484" opacity=".45"/>
+<path d="M320 372c0-10 6-16 16-16" stroke="#D57FA2"/>
+<rect x="346" y="480" width="108" height="84" rx="8" opacity=".7"/><path d="M400.0 504.0 L405.0 510.0 L412.7 509.3 L412.0 517.0 L418.0 522.0 L412.0 527.0 L412.7 534.7 L405.0 534.0 L400.0 540.0 L395.0 534.0 L387.3 534.7 L388.0 527.0 L382.0 522.0 L388.0 517.0 L387.3 509.3 L395.0 510.0Z" fill="#F5F9F2" opacity="0.9"/>
+</g>
+</g>
+</svg>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<!-- Placeholder image 800x800 - replace with your own product photo of the same size -->
+<defs>
+  <radialGradient id="spot" cx="50%" cy="40%" r="62%">
+    <stop offset="0" stop-color="#2A2A2A"/>
+    <stop offset="1" stop-color="#0A0A0A"/>
+  </radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#FFC400" stop-opacity="0.12"/>
+    <stop offset="1" stop-color="#FFC400" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#000000" stop-opacity="0.6"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#spot)"/>
+<ellipse cx="400.0" cy="438" rx="356" ry="356" fill="url(#glow)"/>
+<ellipse cx="400.0" cy="650" rx="244" ry="32" fill="url(#floor)"/>
+<g transform="translate(400.0 650) scale(1.06) translate(-400.0 -640)" fill="none" stroke="#FFC400" stroke-width="2.26" stroke-linecap="round" stroke-linejoin="round">
+<path d="M400 352V318"/>
+<circle cx="400" cy="292" r="50.6" fill="#FFE066" fill-opacity=".1" stroke="none"/><path transform="translate(400 310) scale(1.1)" d="M0-46C-14-22-12 0 0 4 12 0 14-22 0-46Z" fill="#171717" stroke="#FFE066"/>
+<path d="M286 380H514V600Q514 640 474 640H326Q286 640 286 600Z" fill="#171717"/>
+<path d="M300 350H500V380H300Z" fill="#171717"/>
+<path d="M286 470H514" opacity=".35"/>
+<g transform="translate(400 548) scale(0.28) translate(-100 -140)" stroke="#FFC400" stroke-width="8.57">
+  <path d="M84 60c-1-12-5-22-12-30 10 2 16 7 19 13 2-9 5-16 9-22 4 6 7 13 9 22 3-6 9-11 19-13-7 8-11 18-12 30Z" fill="#171717"/>
+  <path d="M100 50c52 0 86 42 86 90 0 46-38 74-86 74S14 186 14 140c0-48 34-90 86-90Z" fill="#171717"/>
+  <path d="M74 58c-28 34-30 112 2 150M126 58c28 34 30 112-2 150" opacity=".45" fill="none"/>
+  <path d="M38 122c6-28 24-48 48-56" stroke="#FFE066" fill="none"/>
+</g>
+</g>
+</svg>

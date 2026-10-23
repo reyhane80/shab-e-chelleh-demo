@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<!-- Placeholder image 800x800 - replace with your own product photo of the same size -->
+<defs>
+  <radialGradient id="spot" cx="50%" cy="40%" r="62%">
+    <stop offset="0" stop-color="#FBF6EC"/>
+    <stop offset="1" stop-color="#E9DDC8"/>
+  </radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.55"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#8A6220" stop-opacity="0.18"/>
+    <stop offset="1" stop-color="#8A6220" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#spot)"/>
+<ellipse cx="400.0" cy="380" rx="269" ry="269" fill="url(#glow)"/>
+<ellipse cx="400.0" cy="540" rx="184" ry="24" fill="url(#floor)"/>
+<g transform="translate(400.0 540) scale(0.8) translate(-400.0 -640)" fill="none" stroke="#A87A2E" stroke-width="3.00" stroke-linecap="round" stroke-linejoin="round">
+<path d="M330 222Q400 252 470 222L566 258Q600 330 624 404L572 424Q556 380 540 352V640H260V352Q244 380 228 424L176 404Q200 330 234 258Z" fill="#F8F1E5"/>
+<path d="M330 222Q400 290 470 222"/>
+<path d="M262 604H538M262 620H538M178 392 226 410M622 392 574 410" opacity=".5"/>
+<path d="M400 340V460M340 400H460" opacity=".25"/>
+<path d="M400.0 366.0 L409.4 377.4 L424.0 376.0 L422.6 390.6 L434.0 400.0 L422.6 409.4 L424.0 424.0 L409.4 422.6 L400.0 434.0 L390.6 422.6 L376.0 424.0 L377.4 409.4 L366.0 400.0 L377.4 390.6 L376.0 376.0 L390.6 377.4Z" fill="#F8F1E5" opacity="1"/>
+</g>
+</svg>

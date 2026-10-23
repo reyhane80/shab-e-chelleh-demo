@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800">
+<!-- Placeholder image 800x800 - replace with your own product photo of the same size -->
+<defs>
+  <radialGradient id="spot" cx="50%" cy="40%" r="62%">
+    <stop offset="0" stop-color="#22304F"/>
+    <stop offset="1" stop-color="#0B1220"/>
+  </radialGradient>
+  <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#D4A24C" stop-opacity="0.16"/>
+    <stop offset="1" stop-color="#D4A24C" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="floor" cx="50%" cy="50%" r="50%">
+    <stop offset="0" stop-color="#000000" stop-opacity="0.55"/>
+    <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+<rect width="800" height="800" fill="url(#spot)"/>
+<ellipse cx="400.0" cy="438" rx="356" ry="356" fill="url(#glow)"/>
+<ellipse cx="400.0" cy="650" rx="244" ry="32" fill="url(#floor)"/>
+<g transform="translate(400.0 650) scale(1.06) translate(-400.0 -640)" fill="none" stroke="#D4A24C" stroke-width="2.26" stroke-linecap="round" stroke-linejoin="round">
+<path d="M300 602v34 M318 602v34 M336 602v34 M354 602v34 M372 602v34 M390 602v34 M408 602v34 M426 602v34 M444 602v34 M462 602v34 M480 602v34 M498 602v34" opacity=".7"/>
+<path d="M290 230H510V604H290Z" fill="#1B2640"/>
+<path d="M290 300H510M290 534H510" opacity=".5"/>
+<path d="M300 246c0-6 4-10 10-10" stroke="#EBCB8B"/>
+<path d="M400.0 371.0 L412.7 386.4 L432.5 384.5 L430.6 404.3 L446.0 417.0 L430.6 429.7 L432.5 449.5 L412.7 447.6 L400.0 463.0 L387.3 447.6 L367.5 449.5 L369.4 429.7 L354.0 417.0 L369.4 404.3 L367.5 384.5 L387.3 386.4Z" fill="#1B2640" opacity="1"/>
+</g>
+</svg>
