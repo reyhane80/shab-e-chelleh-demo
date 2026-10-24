@@ -25,7 +25,6 @@
     { id: 'nowruz', name: 'نوروز', swatch: ['#0C261D', '#F2A7C3', '#1F7A45'], color: '#0C261D' },
   ];
   const STORAGE_KEY = 'shab-demo-theme';
-  const PLACEHOLDER_DIR = 'assets/images/placeholders/';
   const root = document.documentElement;
 
   const readStored = () => {
@@ -46,9 +45,11 @@
 
   // تصاویر نمونه‌ی هر تم در پوشه‌ی placeholders/<نام تم>/ قرار دارند
   const swapPlaceholders = (id) => {
-    document.querySelectorAll(`img[src*="${PLACEHOLDER_DIR}"]`).forEach((img) => {
-      const file = img.getAttribute('src').split('/').pop();
-      img.setAttribute('src', PLACEHOLDER_DIR + (id ? `${id}/` : '') + file);
+    const folder = /placeholders\/(?:black-friday\/|nowruz\/)?/;
+    document.querySelectorAll('img[src*="placeholders/"]').forEach((img) => {
+      const src = img.getAttribute('src');
+      const next = src.replace(folder, `placeholders/${id ? `${id}/` : ''}`);
+      if (next !== src) img.setAttribute('src', next);
     });
   };
 
@@ -159,4 +160,10 @@
   injectStyles();
   build();
   apply(initial);
+
+  // تصاویر کوچک سبد خرید هم با تم دمو هماهنگ شوند
+  document.addEventListener('shab:cart-render', () => {
+    const active = (THEMES.find((t) => t.id && root.classList.contains(`theme-${t.id}`)) || THEMES[0]).id;
+    swapPlaceholders(active);
+  });
 })();

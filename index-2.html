@@ -12,7 +12,7 @@
   <meta name="author" content="نام فروشگاه">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#0B1220">
-  <meta name="generator" content="Shab-e Chelleh HTML Template 1.0.0">
+  <meta name="generator" content="Shab-e Chelleh HTML Template 1.1.0">
   <!-- <link rel="canonical" href="https://example.com/"> آدرس کامل صفحه را اینجا بنویسید -->
   <!-- ===== پایان: متاتگ‌های سئو ===== -->
 
@@ -203,10 +203,10 @@
         <a href="#" class="icon-btn hidden sm:inline-grid" aria-label="جستجو">
           <svg aria-hidden="true"><use href="#i-search"/></svg>
         </a>
-        <a href="#" class="icon-btn" aria-label="سبد خرید">
+        <button type="button" class="icon-btn" data-cart-open aria-haspopup="dialog" aria-controls="mini-cart" aria-expanded="false" aria-label="سبد خرید">
           <svg aria-hidden="true"><use href="#i-bag"/></svg>
-          <span class="cart-badge" data-cart-count aria-live="polite">۲</span>
-        </a>
+          <span class="cart-badge" data-cart-count hidden>۰</span>
+        </button>
         <button type="button" class="icon-btn menu-toggle lg:hidden" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="باز کردن منو">
           <span aria-hidden="true">
             <span class="bar"></span>
@@ -232,6 +232,52 @@
     <p class="mt-auto pt-10 text-sm text-mist">ارسال رایگان همه‌ی سفارش‌ها تا شب یلدا</p>
   </div>
   <!-- ===== پایان: هدر شیشه‌ای ===== -->
+
+  <!-- ===== شروع: سبد خرید کشویی (mini-cart) =====
+       سبد فقط سمت کاربر و نمایشی است و در حافظه‌ی مرورگر (localStorage) ذخیره می‌شود.
+       برای پرداخت واقعی، آن را به فروشگاه یا سیستم سفارش خود وصل کنید (راهنما را ببینید). -->
+  <div class="cart-overlay" data-cart-overlay></div>
+  <div class="mini-cart" id="mini-cart" role="dialog" aria-modal="true" aria-labelledby="mini-cart-title" data-mini-cart inert>
+    <div class="mini-cart-head">
+      <h2 id="mini-cart-title">سبد خرید <span class="mini-cart-count" data-cart-heading-count></span></h2>
+      <button type="button" class="mini-cart-close" data-cart-close aria-label="بستن سبد خرید">
+        <svg aria-hidden="true"><use href="#i-close"/></svg>
+      </button>
+    </div>
+
+    <div class="mini-cart-body">
+      <ul class="cart-items" role="list" data-cart-items aria-label="کالاهای سبد خرید"></ul>
+
+      <div class="cart-empty" data-cart-empty>
+        <svg class="cart-empty-art" viewBox="0 0 120 120" aria-hidden="true">
+          <rect x="30" y="58" width="60" height="44" rx="3"/>
+          <rect x="25" y="46" width="70" height="14" rx="3"/>
+          <path class="cart-empty-line" d="M60 46v56"/>
+          <path d="M60 46c-9-14-22-11-15-2 3 3 10 3 15 2Zm0 0c9-14 22-11 15-2-3 3-10 3-15 2Z"/>
+          <circle cx="60" cy="45" r="3"/>
+        </svg>
+        <p class="cart-empty-title">سبد خرید شما خالی است</p>
+        <p class="cart-empty-text">هنوز هدیه‌ای برای شب یلدا انتخاب نکرده‌اید.</p>
+        <a href="index.html#offers" class="btn btn-gold" data-cart-browse>مشاهده‌ی پیشنهادها</a>
+      </div>
+    </div>
+
+    <div class="mini-cart-foot" data-cart-foot>
+      <div class="cart-total">
+        <span>جمع کل</span>
+        <p><span class="cart-total-amount" data-cart-total data-price>۰</span> <span class="currency">تومان</span></p>
+      </div>
+      <p class="cart-note">ارسال رایگان تا شب یلدا؛ هزینه‌ی نهایی در مرحله‌ی پرداخت محاسبه می‌شود.</p>
+      <!-- لینک زیر را به صفحه‌ی پرداخت (checkout) فروشگاه خود وصل کنید -->
+      <a href="#" class="btn btn-gold w-full">
+        ادامه‌ی فرایند خرید
+        <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+      <button type="button" class="cart-continue" data-cart-close>ادامه‌ی خرید</button>
+    </div>
+    <p class="sr-only" aria-live="polite" data-cart-status></p>
+  </div>
+  <!-- ===== پایان: سبد خرید کشویی ===== -->
 
   <main id="main">
     <!-- ===== شروع: هیروی اسپلیت با محصول شاخص ===== -->
@@ -359,7 +405,7 @@
 
         <ul class="plan-grid">
           <!-- باکس ۱ -->
-          <li class="plan-card reveal">
+          <li class="plan-card reveal" data-product data-product-id="box-silver" data-product-name="باکس نقره‌ای" data-product-price="1280000" data-product-image="assets/images/placeholders/category-giftbox.svg">
             <svg class="plan-icon" viewBox="0 0 96 96" aria-hidden="true">
               <rect x="26" y="46" width="44" height="34" rx="2"/>
               <rect x="22" y="36" width="52" height="12" rx="2"/>
@@ -374,11 +420,11 @@
               <li><svg aria-hidden="true"><use href="#i-check"/></svg>آجیل مخصوص یلدا (۲۵۰ گرم)</li>
               <li><svg aria-hidden="true"><use href="#i-check"/></svg>کارت پیام اختصاصی</li>
             </ul>
-            <a href="#" class="btn btn-outline-dark">انتخاب این باکس</a>
+            <button type="button" class="btn btn-outline-dark" data-add-to-cart><span data-cart-label>انتخاب این باکس</span></button>
           </li>
 
           <!-- باکس ۲: محبوب‌ترین (کلاس plan-card--featured) -->
-          <li class="plan-card plan-card--featured reveal" style="--d:120ms">
+          <li class="plan-card plan-card--featured reveal" style="--d:120ms" data-product data-product-id="box-gold" data-product-name="باکس طلایی" data-product-price="2450000" data-product-image="assets/images/placeholders/category-giftbox.svg">
             <span class="plan-badge">محبوب‌ترین</span>
             <svg class="plan-icon" viewBox="0 0 96 96" aria-hidden="true">
               <rect x="20" y="42" width="56" height="40" rx="2"/>
@@ -396,11 +442,11 @@
               <li><svg aria-hidden="true"><use href="#i-check"/></svg>شال گردن بافت</li>
               <li><svg aria-hidden="true"><use href="#i-check"/></svg>جعبه‌ی مخمل با روبان طلایی</li>
             </ul>
-            <a href="#" class="btn btn-gold">انتخاب این باکس</a>
+            <button type="button" class="btn btn-gold" data-add-to-cart><span data-cart-label>انتخاب این باکس</span></button>
           </li>
 
           <!-- باکس ۳ -->
-          <li class="plan-card reveal" style="--d:240ms">
+          <li class="plan-card reveal" style="--d:240ms" data-product data-product-id="box-shabchelle" data-product-name="باکس شب‌چله" data-product-price="3800000" data-product-image="assets/images/placeholders/category-giftbox.svg">
             <svg class="plan-icon" viewBox="0 0 96 96" aria-hidden="true">
               <rect x="14" y="40" width="68" height="44" rx="2"/>
               <rect x="10" y="26" width="76" height="16" rx="2"/>
@@ -417,7 +463,7 @@
               <li><svg aria-hidden="true"><use href="#i-check"/></svg>شمع، آجیل و شیرینی دست‌ساز</li>
               <li><svg aria-hidden="true"><use href="#i-check"/></svg>کارت پیام با خط خوش</li>
             </ul>
-            <a href="#" class="btn btn-outline-dark">انتخاب این باکس</a>
+            <button type="button" class="btn btn-outline-dark" data-add-to-cart><span data-cart-label>انتخاب این باکس</span></button>
           </li>
         </ul>
       </div>
@@ -440,7 +486,7 @@
         <!-- تصاویر محصول: ابعاد پیشنهادی ۸۰۰×۸۰۰ پیکسل -->
         <ul role="list" class="offers-track" aria-label="محصولات تخفیف‌دار">
           <li class="reveal">
-            <article class="product-card">
+            <article class="product-card" data-product data-product-id="scarf" data-product-name="شال کشمیر یلدایی" data-product-price="1470000" data-product-image="assets/images/placeholders/product-scarf.svg">
               <div class="product-media">
                 <img src="assets/images/placeholders/product-scarf.svg" width="800" height="800" alt="شال کشمیر یلدایی" loading="lazy" decoding="async">
                 <span class="badge-off">۴۰٪</span>
@@ -465,7 +511,7 @@
             </article>
           </li>
           <li class="reveal" style="--d:120ms">
-            <article class="product-card">
+            <article class="product-card" data-product data-product-id="perfume-set" data-product-name="ست عطر شب چله" data-product-price="2240000" data-product-image="assets/images/placeholders/product-perfume-set.svg">
               <div class="product-media">
                 <img src="assets/images/placeholders/product-perfume-set.svg" width="800" height="800" alt="ست عطر شب چله" loading="lazy" decoding="async">
                 <span class="badge-off">۳۰٪</span>
@@ -490,7 +536,7 @@
             </article>
           </li>
           <li class="reveal" style="--d:240ms">
-            <article class="product-card">
+            <article class="product-card" data-product data-product-id="candle" data-product-name="شمع معطر انار و دارچین" data-product-price="445000" data-product-image="assets/images/placeholders/product-candle.svg">
               <div class="product-media">
                 <img src="assets/images/placeholders/product-candle.svg" width="800" height="800" alt="شمع معطر انار و دارچین" loading="lazy" decoding="async">
                 <span class="badge-off">۵۰٪</span>
@@ -515,7 +561,7 @@
             </article>
           </li>
           <li class="reveal" style="--d:360ms">
-            <article class="product-card">
+            <article class="product-card" data-product data-product-id="nut-box" data-product-name="باکس آجیل لوکس یلدا" data-product-price="1295000" data-product-image="assets/images/placeholders/product-nut-box.svg">
               <div class="product-media">
                 <img src="assets/images/placeholders/product-nut-box.svg" width="800" height="800" alt="باکس آجیل لوکس یلدا" loading="lazy" decoding="async">
                 <span class="badge-off">۳۰٪</span>

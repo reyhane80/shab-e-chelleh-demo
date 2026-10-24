@@ -1,6 +1,6 @@
 /* ==========================================================================
    قالب شب‌چله – اسکریپت اصلی
-   نسخه: 1.0.0
+   نسخه: 1.1.0
    --------------------------------------------------------------------------
    بدون jQuery و بدون کتابخانه‌ی خارجی. تغییرات شخصی خود را در custom.js بنویسید
    تا با به‌روزرسانی قالب از بین نروند.
@@ -314,15 +314,119 @@ const CAMPAIGN_ENDED_TEXT = 'کمپین به پایان رسید';
   }
 
   /* ------------------------------------------------------------------------
-     افزودن به سبد (نمایشی): عدد badge سبد زیاد می‌شود و انیمیشن کوچکی اجرا می‌شود.
-     برای اتصال به فروشگاه واقعی، این بخش را با سیستم سبد خرید خود جایگزین کنید.
+     سبد خرید کشویی (mini-cart)
+     - سبد فقط سمت کاربر و نمایشی است و در localStorage مرورگر ذخیره می‌شود؛
+       برای پرداخت واقعی باید به فروشگاه یا بک‌اند شما وصل شود (Help.pdf).
+     - هر محصول قابل افزودن، عنصری با ویژگی data-product است:
+         data-product-id    شناسه‌ی یکتا (انگلیسی)
+         data-product-name  نام محصول
+         data-product-price قیمت به تومان، فقط عدد انگلیسی (مثل 1470000)
+         data-product-image مسیر تصویر کوچک
+       و دکمه‌ای با data-add-to-cart داخل آن.
      ------------------------------------------------------------------------ */
-  function initCart() {
-    const badges = document.querySelectorAll('[data-cart-count]');
-    const buttons = document.querySelectorAll('[data-add-to-cart]');
-    if (!buttons.length) return;
+  const CART_KEY = 'shab-cart';
 
-    buttons.forEach((button) => {
+  const escapeHtml = (text) =>
+    String(text).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+
+  const cartStore = {
+    read() {
+      try {
+        const items = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+        return Array.isArray(items) ? items.filter((i) => i && i.id && i.qty > 0) : [];
+      } catch (e) {
+        return [];
+      }
+    },
+    write(items) {
+      try {
+        localStorage.setItem(CART_KEY, JSON.stringify(items));
+      } catch (e) {
+        /* حافظه‌ی مرورگر در دسترس نیست؛ سبد فقط تا رفرش بعدی می‌ماند */
+      }
+    },
+  };
+
+  function initCart() {
+    const panel = document.querySelector('[data-mini-cart]');
+    const overlay = document.querySelector('[data-cart-overlay]');
+    const openers = document.querySelectorAll('[data-cart-open]');
+    const badges = document.querySelectorAll('[data-cart-count]');
+    let items = cartStore.read();
+    let lastOpener = null;
+
+    const list = panel && panel.querySelector('[data-cart-items]');
+    const empty = panel && panel.querySelector('[data-cart-empty]');
+    const foot = panel && panel.querySelector('[data-cart-foot]');
+    const total = panel && panel.querySelector('[data-cart-total]');
+    const headingCount = panel && panel.querySelector('[data-cart-heading-count]');
+    const status = panel && panel.querySelector('[data-cart-status]');
+
+    const count = () => items.reduce((sum, i) => sum + i.qty, 0);
+
+    const bump = (badge) => {
+      if (prefersReducedMotion() || !badge.animate) return;
+      badge.animate(
+        [{ transform: 'scale(1)' }, { transform: 'scale(1.45)', offset: 0.35 }, { transform: 'scale(0.9)', offset: 0.7 }, { transform: 'scale(1)' }],
+        { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+      );
+    };
+
+    const renderBadges = (animate) => {
+      const n = count();
+      badges.forEach((badge) => {
+        badge.textContent = toFa(n);
+        badge.hidden = n === 0;
+        if (animate && n) bump(badge);
+      });
+      openers.forEach((btn) => btn.setAttribute('aria-label', n ? `سبد خرید، ${toFa(n)} کالا` : 'سبد خرید، خالی'));
+    };
+
+    const render = () => {
+      if (!panel) return;
+      const n = count();
+      list.innerHTML = items
+        .map((item) => {
+          const name = escapeHtml(item.name);
+          return `<li class="cart-item" data-id="${escapeHtml(item.id)}">
+  <img class="cart-thumb" src="${escapeHtml(item.image)}" width="80" height="80" alt="">
+  <div class="cart-info">
+    <p class="cart-name">${name}</p>
+    <p class="cart-price"><span data-price>${formatPrice(item.price * item.qty)}</span> <span class="currency">تومان</span></p>
+    <div class="cart-qty" role="group" aria-label="تعداد ${name}">
+      <button type="button" data-qty="1" aria-label="افزایش تعداد ${name}">+</button>
+      <span aria-live="off">${toFa(item.qty)}</span>
+      <button type="button" data-qty="-1" aria-label="کاهش تعداد ${name}">−</button>
+    </div>
+  </div>
+  <button type="button" class="cart-remove" data-remove aria-label="حذف ${name} از سبد">
+    <svg aria-hidden="true"><use href="#i-close"/></svg>
+  </button>
+</li>`;
+        })
+        .join('');
+      list.hidden = n === 0;
+      empty.hidden = n !== 0;
+      foot.hidden = n === 0;
+      total.textContent = formatPrice(items.reduce((sum, i) => sum + i.price * i.qty, 0));
+      headingCount.textContent = n ? `(${toFa(n)})` : '';
+      initNumberSeparators(panel);
+      // اطلاع به اسکریپت‌های دیگر (مثلاً سوییچر تم دمو برای تعویض تصاویر نمونه)
+      document.dispatchEvent(new CustomEvent('shab:cart-render'));
+    };
+
+    const save = (animate) => {
+      cartStore.write(items);
+      renderBadges(animate);
+      render();
+    };
+
+    const announce = (text) => {
+      if (status) status.textContent = text;
+    };
+
+    /* ---- افزودن به سبد ---- */
+    document.querySelectorAll('[data-add-to-cart]').forEach((button) => {
       const label = button.querySelector('[data-cart-label]');
       const icon = button.querySelector('use');
       const original = label ? label.textContent : '';
@@ -330,21 +434,30 @@ const CAMPAIGN_ENDED_TEXT = 'کمپین به پایان رسید';
       let timer = null;
 
       button.addEventListener('click', () => {
-        badges.forEach((badge) => {
-          const count = parseInt(toEn(badge.textContent), 10) || 0;
-          badge.textContent = toFa(count + 1);
-          if (!prefersReducedMotion() && badge.animate) {
-            badge.animate(
-              [{ transform: 'scale(1)' }, { transform: 'scale(1.45)', offset: 0.35 }, { transform: 'scale(0.9)', offset: 0.7 }, { transform: 'scale(1)' }],
-              { duration: 700, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
-            );
-          }
-        });
+        const product = button.closest('[data-product]');
+        if (!product) return;
+        const data = product.dataset;
+        const id = data.productId;
+        const existing = items.find((i) => i.id === id);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          items.push({
+            id,
+            name: data.productName,
+            price: parseInt(data.productPrice, 10) || 0,
+            // مسیر کامل ذخیره می‌شود تا در همه‌ی صفحه‌ها درست نمایش داده شود
+            image: new URL(data.productImage, document.baseURI).href,
+            qty: 1,
+          });
+        }
+        save(true);
+        announce(`${data.productName} به سبد اضافه شد`);
 
         // حالت «اضافه شد»: دکمه کامل طلایی می‌شود، بعد از ۱.۸ ثانیه به حالت عادی برمی‌گردد
         button.classList.add('is-added');
         if (label) label.textContent = 'به سبد اضافه شد';
-        if (icon) icon.setAttribute('href', '#i-check');
+        if (icon && originalIcon === '#i-bag') icon.setAttribute('href', '#i-check');
         clearTimeout(timer);
         timer = setTimeout(() => {
           button.classList.remove('is-added');
@@ -352,6 +465,106 @@ const CAMPAIGN_ENDED_TEXT = 'کمپین به پایان رسید';
           if (icon) icon.setAttribute('href', originalIcon);
         }, 1800);
       });
+    });
+
+    renderBadges(false);
+    if (!panel) return;
+    render();
+
+    /* ---- تعداد و حذف ---- */
+    list.addEventListener('click', (event) => {
+      const row = event.target.closest('.cart-item');
+      if (!row) return;
+      const item = items.find((i) => i.id === row.dataset.id);
+      if (!item) return;
+      const qtyBtn = event.target.closest('[data-qty]');
+      const removeBtn = event.target.closest('[data-remove]');
+      const index = items.indexOf(item);
+
+      if (qtyBtn) {
+        item.qty += parseInt(qtyBtn.dataset.qty, 10);
+        if (item.qty < 1) items.splice(index, 1);
+        announce(item.qty < 1 ? `${item.name} از سبد حذف شد` : `تعداد ${item.name}: ${toFa(item.qty)}`);
+      } else if (removeBtn) {
+        items.splice(index, 1);
+        announce(`${item.name} از سبد حذف شد`);
+      } else {
+        return;
+      }
+      const action = qtyBtn ? `[data-qty="${qtyBtn.dataset.qty}"]` : null;
+      save(false);
+
+      // فوکوس کیبورد در جای منطقی بماند
+      const sameRow = action && list.querySelector(`.cart-item[data-id="${CSS.escape(item.id)}"] ${action}`);
+      const nextRow = list.querySelectorAll('.cart-item')[Math.min(index, items.length - 1)];
+      const target = sameRow || (nextRow && nextRow.querySelector('[data-remove]')) || panel.querySelector('[data-cart-browse]');
+      if (target) target.focus();
+    });
+
+    /* ---- باز و بسته کردن پنل ---- */
+    const focusables = () =>
+      Array.from(panel.querySelectorAll('a[href], button:not([disabled])')).filter((el) => !el.closest('[hidden]'));
+
+    const isOpen = () => panel.classList.contains('is-open');
+
+    const setOpen = (open, opener) => {
+      if (open === isOpen()) return;
+      panel.classList.toggle('is-open', open);
+      if (overlay) overlay.classList.toggle('is-open', open);
+      document.body.classList.toggle('is-locked', open);
+      openers.forEach((btn) => btn.setAttribute('aria-expanded', String(open)));
+
+      if (open) {
+        lastOpener = opener || document.activeElement;
+        panel.removeAttribute('inert');
+        const closeBtn = panel.querySelector('[data-cart-close]');
+        setTimeout(() => closeBtn && closeBtn.focus({ preventScroll: true }), 60);
+      } else {
+        panel.setAttribute('inert', '');
+        if (lastOpener && document.body.contains(lastOpener)) lastOpener.focus({ preventScroll: true });
+      }
+    };
+
+    openers.forEach((btn) =>
+      btn.addEventListener('click', () => {
+        // اگر منوی موبایل باز است، اول بسته شود
+        const menuToggle = document.querySelector('[data-menu-toggle][aria-expanded="true"]');
+        if (menuToggle) menuToggle.click();
+        setOpen(!isOpen(), btn);
+      })
+    );
+    panel.querySelectorAll('[data-cart-close]').forEach((btn) => btn.addEventListener('click', () => setOpen(false)));
+    if (overlay) overlay.addEventListener('click', () => setOpen(false));
+    panel.querySelectorAll('[data-cart-browse]').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+
+    document.addEventListener('keydown', (event) => {
+      if (!isOpen()) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+        return;
+      }
+      if (event.key === 'Tab') {
+        const els = focusables();
+        if (!els.length) return;
+        const first = els[0];
+        const last = els[els.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !panel.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !panel.contains(document.activeElement))) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+
+    // هماهنگی بین تب‌های باز همین سایت
+    window.addEventListener('storage', (event) => {
+      if (event.key !== CART_KEY) return;
+      items = cartStore.read();
+      renderBadges(false);
+      render();
     });
   }
 
@@ -746,15 +959,15 @@ const CAMPAIGN_ENDED_TEXT = 'کمپین به پایان رسید';
   initCountdown();
   initParallax();
   initReveal();
-  initCart();
   initWishlist();
   initFeature();
   initNumberSeparators();
+  initCart();
   initSlider();
   initAccordion();
   initNewsletter();
   initFormValidation();
 
   // در دسترس قرار دادن ابزارها برای custom.js
-  window.ShabeChelleh = { toFa, toEn, formatPrice, initNumberSeparators };
+  window.ShabeChelleh = { toFa, toEn, formatPrice, initNumberSeparators, cartStore };
 })();
